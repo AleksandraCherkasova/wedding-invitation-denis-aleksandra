@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Денис и Александра · 10.09.2026</title>
+  <link rel="icon" type="image/svg+xml" href="Логотип.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @font-face {
+      font-family: 'Florisel Script';
+      src: url('Floriselscript.woff') format('woff'),
+           url('Floriselscript.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --c-headline: #332929;
+      --c-body:     #332E29;
+      --c-btn:      #4D453D;
+      --c-btn-bg:   #F0EEE5;
+      --c-bg:       #EDE9E1;
+      --c-cal:      #C9A09A;
+      --px: 40px;
+      --py: 80px;
+      --gt: 40px;
+      --gc: 20px;
+      --f-script: 'Florisel Script', cursive;
+      --f-serif:  'EB Garamond', Georgia, serif;
+      --r-photo:  8px;
+      --r-btn:    8px;
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--f-serif);
+      font-size: 18px;
+      line-height: 23px;
+      color: var(--c-body);
+      background: var(--c-bg);
+      overflow-x: hidden;
+      /* locked until hero animation completes */
+      overflow-y: hidden;
+    }
+
+    body.unlocked {
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; }
+
+    /* ══════════════════════════════════════════
+       HERO OVERLAY
+    ══════════════════════════════════════════ */
+    #hero-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* Envelope layer */
+    #env-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* All envelope images: same size, same position, 5px bleed top+bottom */
+    .env-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #env-container {
+      position: absolute;
+
+      height: 100dvh;
+      width: 100vw;
+
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      overflow: hidden;
+    } 
+
+    #env-whole { z-index: 4; transition: opacity 0.15s ease; }
+
+    #env-top,
+    #env-bottom {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.3s cubic-bezier(0.3, 0, 0.2, 1),
+                  opacity   1.2s ease 0.2s;
+    }
+
+    #env-top {
+      top: 0;
+      z-index: 3;
+      object-position: top;    /* прибиваем содержимое к верху */
+    }
+
+    #env-bottom {
+      bottom: 0;
+      z-index: 2;
+      object-position: bottom; /* прибиваем содержимое к низу */
+    }
+
+    /* Text layer */
+    #hero-text {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      transition: opacity 0.7s ease;
+    }
+
+    /* Group 1 — "Вы приглашены / на свадьбу" at 25vh */
+    #hero-group-top {
+      position: absolute;
+      left: 50%;
+      top: 25vh;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .h-invited {
+      font-family: var(--f-serif);
+      font-size: 36px;
+      line-height: 1.2;
+      color: var(--c-body);
+      position: relative;
+      left: -40px;
+      white-space: nowrap;
+      margin-bottom: 6px;
+    }
+    .h-wedding {
+      font-family: var(--f-script);
+      font-size: 96px;
+      line-height: 0.9;
+      color: var(--c-headline);
+      position: relative;
+      left: 20px;
+      white-space: nowrap;
+    }
+
+    /* Group 2 — "Денис и Александра / дата" at 75vh + 20px */
+    #hero-group-bottom {
+      position: absolute;
+      left: 50%;
+      top: calc(75vh + 20px);
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-top: -6px;
+    }
+
+    .h-names {
+      font-family: var(--f-script);
+      font-size: 52px;
+      line-height: 1.1;
+      color: var(--c-headline);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .h-date {
+      font-family: var(--f-serif);
+      font-size: 24px;
+      line-height: 32px;
+      color: var(--c-body);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Hint — 40px from bottom, centred */
+    .h-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      right: 0;
+      font-family: var(--f-serif);
+      font-size: 18px;
+      line-height: 23px;
+      color: var(--c-body);
+      text-align: center;
+      opacity: 0.6;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translateY(0); }
+      50%       { opacity: 0.25; transform: translateY(-6px); }
+    }
+
+    /* ── Hero animation states ── */
+    #hero-overlay.opening #hero-text  { opacity: 0; }
+    #hero-overlay.opening #env-whole  { opacity: 0; }
+    #hero-overlay.opening #env-top {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    #hero-overlay.opening #env-bottom {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    
+    #hero-overlay.done {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════
+       MAIN CONTENT — initially invisible
+    ══════════════════════════════════════════ */
+    #site-content {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    #site-content.visible { opacity: 1; }
+
+    /* ══════════════════════════════════════════
+       TYPOGRAPHY
+    ══════════════════════════════════════════ */
+    .t-hl {
+      font-family: var(--f-script);
+      font-size: 52px;
+      line-height: 1;
+      color: var(--c-headline);
+      text-align: center;
+    }
+    .t-body  { font-family: var(--f-serif); font-size: 18px; line-height: 23px; color: var(--c-body); }
+    .t-names { font-family: var(--f-script); font-size: 32px; line-height: 52px; color: var(--c-headline); }
+
+    /* ══════════════════════════════════════════
+       BUTTON
+    ══════════════════════════════════════════ */
+    .btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 43px; padding: 4px 16px;
+      border: 1px solid var(--c-btn); border-radius: var(--r-btn);
+      background: var(--c-btn-bg);
+      font-family: var(--f-serif); font-size: 18px; line-height: 23px; color: var(--c-btn);
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s ease; -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover  { background: #E5DFD2; }
+    .btn:active { background: #DDD8CC; }
+
+    /* ══════════════════════════════════════════
+       UTILITIES
+    ══════════════════════════════════════════ */
+    .sep { display: flex; justify-content: center; margin: 28px 0; }
+    .sep img { height: 28px; opacity: 0.5; }
+
+    .photo { width: 100%; border-radius: var(--r-photo); overflow: hidden; }
+    .photo img { width: 100%; }
+
+    .mt-gc { margin-top: var(--gc); }
+    .mt-gt { margin-top: var(--gt); }
+    .mb-gc { margin-bottom: var(--gc); }
+    .mb-gt { margin-bottom: var(--gt); }
+
+    /* ══════════════════════════════════════════
+       FADE-IN ON SCROLL
+    ══════════════════════════════════════════ */
+    .fi { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fi.on { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.10s; }
+    .d2 { transition-delay: 0.20s; }
+    .d3 { transition-delay: 0.30s; }
+    .d4 { transition-delay: 0.40s; }
+    .d5 { transition-delay: 0.50s; }
+
+    /* ══════════════════════════════════════════
+       SECTION BASE
+    ══════════════════════════════════════════ */
+    .section { position: relative; width: 100%; padding: var(--py) var(--px); }
+
+    /* ══════════════════════════════════════════
+       CONTENT WRAP — repeating background
+    ══════════════════════════════════════════ */
+    #content-wrap {
+        background-image: url('pattern.svg');
+        background-repeat: repeat;
+        background-position: 0 0;
+    }
+
+    /* ══════════════════════════════════════════
+       BLOCK 2 — INVITATION + DATE
+    ══════════════════════════════════════════ */
+    .inv-date {
+      font-family: var(--f-serif);
+      font-size: 24px; line-height: 32px;
+      color: var(--c-body);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .calendar {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-family: var(--f-serif);
+    }
+    .calendar th,
+    .calendar td {
+      font-size: 18px; line-height: 23px; font-weight: 400;
+      color: var(--c-body);
+      text-align: center;
+      width: calc(100% / 7);
+      height: 40px;
+      padding: 0;
+    }
+    .calendar thead th { opacity: 0.5; }
+    .cal-hl span {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--c-cal); color: #fff;
+    }
+
+    /* ══════════════════════════════════════════
+       BLOCK 3 — LOCATION
+    ══════════════════════════════════════════ */
+    .loc-name { font-size: 24px; line-height: 32px; color: var(--c-body); }
+    .loc-btns { display: flex; flex-direction: column; gap: var(--gc); }
+
+    /* ══════════════════════════════════════════
+       BLOCK 4 — PROGRAM
+    ══════════════════════════════════════════ */
+    .prog-list { display: flex; flex-direction: column; gap: 30px; }
+    .prog-item { display: grid; grid-template-columns: 60px 1fr; gap: 0 14px; align-items: start; }
+    .prog-time  { font-family: var(--f-serif); font-size: 24px; line-height: 32px; color: var(--c-body); }
+    .prog-title { font-size: 24px; line-height: 32px; color: var(--c-body); }
+    .prog-desc  { font-size: 18px; line-height: 23px; color: var(--c-body); opacity: 0.75; margin-top: 2px; }
+
+    /* ══════════════════════════════════════════
+       BLOCK 5 — DRESS CODE
+    ══════════════════════════════════════════ */
+    .dc-sub { font-size: 24px; line-height: 32px; color: var(--c-body); }
+
+    .palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; margin: var(--gc) 0; }
+    .pal-c   { aspect-ratio: 1/1; border-radius: 6px; }
+
+    .carousel-wrap {
+      margin-left:  calc(-1 * var(--px));
+      margin-right: calc(-1 * var(--px));
+    }
+    .carousel-label { font-size: 18px; line-height: 23px; color: var(--c-body); margin-bottom: 10px; padding: 0 var(--px); }
+    .carousel-track {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0 var(--px) 8px;
+      cursor: grab;
+      user-select: none;
+    }
+    .carousel-track.dragging { cursor: grabbing; scroll-snap-type: none; }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-item {
+      flex: 0 0 auto;
+      width: 118px;
+      height: 240px;
+      border-radius: var(--r-photo);
+      overflow: hidden;
+      scroll-snap-align: start;
+      background: transparent;
+    }
+    .carousel-item img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: bottom center;
+      display: block;
+    }
+
+    /* ══════════════════════════════════════════
+       BLOCK 7 — CONTACTS
+    ══════════════════════════════════════════ */
+    .cont-name  { font-size: 24px; line-height: 32px; color: var(--c-body); }
+    .cont-phone { font-size: 24px; line-height: 32px; color: var(--c-body); text-decoration: none; display: block; margin-bottom: var(--gc); }
+    .cont-btns  { display: flex; flex-direction: column; gap: var(--gc); }
+
+    /* ══════════════════════════════════════════
+       BLOCK 8 — RSVP / ПОДТВЕРЖДЕНИЕ
+    ══════════════════════════════════════════ */
+    #rsvp { text-align: left; }
+    .rsvp-hl { font-family: var(--f-script); font-size: 52px; line-height: 1.05; color: var(--c-headline); text-align: center; }
+    .rsvp-closing { font-family: var(--f-serif); font-size: 18px; line-height: 23px; color: var(--c-body); text-align: center; margin-top: var(--gt); }
+    .rsvp-names   { font-family: var(--f-script); font-size: 36px; line-height: 1.2; color: var(--c-headline); text-align: center; margin-top: 20px; }
+
+    /* ══════════════════════════════════════════
+       DESKTOP ≥ 768px
+    ══════════════════════════════════════════ */
+    @media (min-width: 768px) {
+      :root { --px: 80px; --py: 100px; --gt: 48px; --gc: 24px; }
+
+      body { background-color: #EAE7DE; }
+
+      #content-wrap { background-size: 680px auto; background-position: center top; }
+      #content-wrap .section { max-width: 680px; margin: 0 auto; }
+
+      .t-hl          { font-size: 64px; }
+      .prog-item     { grid-template-columns: 70px 1fr; gap: 0 18px; }
+      .carousel-item { width: 144px; height: 292px; }
+      .rsvp-hl       { font-size: 64px; }
+    }
+
+    @media (min-width: 1024px) {
+      #content-wrap .section { max-width: 700px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       HERO OVERLAY
+  ============================================= -->
+  <section id="hero-overlay">
+
+  <div id="env-layer">
+    <div id="env-container">
+
+      <img id="env-whole"  class="env-img" src="env_whole.svg"  alt="">
+      <img id="env-top"    class="env-img" src="env_top.svg"    alt="">
+      <img id="env-bottom" class="env-img" src="env_bottom.svg" alt="">
+
+    </div>
+  </div>
+
+  <div id="hero-text">
+    <div id="hero-group-top">
+      <span class="h-invited">Вы приглашены</span>
+      <span class="h-wedding">на свадьбу</span>
+    </div>
+
+    <div id="hero-group-bottom">
+      <span class="h-names">Денис и Александра</span>
+      <span class="h-date">10 сентября 2026 · Минск</span>
+    </div>
+
+    <span class="h-hint">Нажмите, чтобы открыть</span>
+  </div>
+
+</section>
+
+  <!-- Content (placeholder — replace with real content) -->
+
+
+  <!-- ══════════════════════════════════════════
+       SITE CONTENT
+  ══════════════════════════════════════════ -->
+  <div id="site-content">
+  <div id="content-wrap">
+
+    <!-- BLOCK 2: INVITATION + DATE -->
+    <section id="invitation" class="section">
+      <h2 class="t-hl mb-gt fi">Дорогие гости!</h2>
+      <p class="t-body mb-gc fi d1">
+        Мы вступаем в новый этап нашей жизни и хотим разделить это с людьми, которые значат для нас больше всего — и вы среди них.
+      </p>
+      <div class="photo mb-gc fi d2">
+        <img src="Наше_фото_в_начале.svg" alt="Денис и Александра">
+      </div>
+      <p class="t-body mb-gc fi d2">
+        Будем невероятно рады видеть вас на нашей свадьбе, которая состоится
+      </p>
+      <p class="inv-date fi d3">10 сентября 2026</p>
+      <div class="fi d3">
+        <table class="calendar" role="grid" aria-label="Сентябрь 2026">
+          <thead>
+            <tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr>
+          </thead>
+          <tbody>
+            <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+            <tr>
+              <td>7</td><td>8</td><td>9</td>
+              <td class="cal-hl"><span>10</span></td>
+              <td>11</td><td>12</td><td>13</td>
+            </tr>
+            <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+            <tr><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td></tr>
+            <tr><td>28</td><td>29</td><td>30</td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BLOCK 3: LOCATION -->
+    <section id="location" class="section">
+      <h2 class="t-hl mb-gt fi">Место проведения</h2>
+      <p class="loc-name mb-gc fi d1">La Dolce Vita House</p>
+      <p class="t-body mb-gc fi d1">
+        Минская область, Узденский район,<br>д. Русаково, ул. Русаковская, д.14
+      </p>
+      <div class="photo mb-gc fi d2">
+        <img src="Фото_локации.svg" alt="La Dolce Vita House">
+      </div>
+      <p class="t-body mb-gc fi d2">
+        Для вашего комфорта рекомендуем прокладывать маршрут через деревню Яченка.
+      </p>
+      <div class="loc-btns fi d3">
+        <a href="https://maps.app.goo.gl/rBXBf5wreC9w9dHw7" target="_blank" rel="noopener noreferrer" class="btn">Открыть в Google картах →</a>
+        <a href="https://yandex.by/maps/-/CPr0ZL3Q" target="_blank" rel="noopener noreferrer" class="btn">Открыть в Яндекс картах →</a>
+      </div>
+    </section>
+
+    <!-- BLOCK 4: PROGRAM -->
+    <section id="program" class="section">
+      <h2 class="t-hl mb-gt fi">Программа дня</h2>
+      <div class="prog-list">
+        <div class="prog-item fi">
+          <div class="prog-time">15:00</div>
+          <div><div class="prog-title">Сбор гостей</div><div class="prog-desc">Живое общение и фуршет</div></div>
+        </div>
+        <div class="prog-item fi d1">
+          <div class="prog-time">16:00</div>
+          <div><div class="prog-title">Свадебная церемония</div><div class="prog-desc">Самый трогательный момент дня</div></div>
+        </div>
+        <div class="prog-item fi d2">
+          <div class="prog-time">17:00</div>
+          <div><div class="prog-title">Праздничный ужин</div><div class="prog-desc">Вкусная еда, тосты, танцы и хорошее настроение</div></div>
+        </div>
+        <div class="prog-item fi d3">
+          <div class="prog-time">22:00</div>
+          <div><div class="prog-title">Завершение вечера</div><div class="prog-desc">Десерт и яркий финал</div></div>
+        </div>
+        <div class="prog-item fi d4">
+          <div class="prog-time">00:00</div>
+          <div><div class="prog-title">Афтерпати</div><div class="prog-desc">Неформальное продолжение праздника для самых стойких</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 5: DRESS CODE -->
+    <section id="dresscode" class="section">
+      <h2 class="t-hl mb-gt fi">Дресс код</h2>
+      <p class="t-body fi d1">Нам важно, чтобы вы чувствовали себя комфортно и красиво. Выбирайте праздничный наряд, в котором вам будет легко и свободно.</p>
+
+      <p class="dc-sub mt-gt mb-gc fi d2">Палитра</p>
+      <p class="t-body mb-gc fi d2">Мы очень ждем и тщательно готовимся к нашему дню. И будем благодарны, если вы поддержите стилистику нашего торжества! Ориентируйтесь на палитру ниже — она сочетает темные благородные оттенки и нежные пастельные тона.</p>
+      <div class="palette fi d3">
+        <div class="pal-c" style="background:#E6E4E4"></div>
+        <div class="pal-c" style="background:#E9D9C6"></div>
+        <div class="pal-c" style="background:#FDE3E3"></div>
+        <div class="pal-c" style="background:#EAF1C5"></div>
+        <div class="pal-c" style="background:#F6EBCA"></div>
+        <div class="pal-c" style="background:#F3C9B0"></div>
+        <div class="pal-c" style="background:#0B0B0B"></div>
+        <div class="pal-c" style="background:#70604E"></div>
+        <div class="pal-c" style="background:#DAA5AE"></div>
+        <div class="pal-c" style="background:#494E38"></div>
+        <div class="pal-c" style="background:#E9CC73"></div>
+        <div class="pal-c" style="background:#BA682D"></div>
+      </div>
+      <p class="t-body fi d3">Просим воздержаться от ярких кричащих оттенков и принтов, а также красного и синего цветов.</p>
+
+      <p class="dc-sub mt-gt fi d1">Примеры образов</p>
+      <p class="t-body mt-gc fi d2">Ниже мы собрали для вас примеры образов для лучшего понимания палитры. Вы можете ориентироваться на них и вдохновляться.</p>
+
+      <div class="carousel-wrap mt-gc fi d3">
+        <p class="carousel-label">Примеры для женщин:</p>
+        <div class="carousel-track" role="list">
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_01.svg" alt="Образ 1"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_02.svg" alt="Образ 2"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_03.svg" alt="Образ 3"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_04.svg" alt="Образ 4"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_05.svg" alt="Образ 5"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_06.svg" alt="Образ 6"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_07.svg" alt="Образ 7"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_08.svg" alt="Образ 8"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_09.svg" alt="Образ 9"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_10.svg" alt="Образ 10"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_11.svg" alt="Образ 11"></div>
+        </div>
+      </div>
+
+      <div class="carousel-wrap mt-gc fi d4">
+        <p class="carousel-label">Примеры для мужчин:</p>
+        <div class="carousel-track" role="list">
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_1.svg"  alt="Образ 1"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_2.svg"  alt="Образ 2"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_3.svg"  alt="Образ 3"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_4.svg"  alt="Образ 4"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_5.svg"  alt="Образ 5"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_6.svg"  alt="Образ 6"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_7.svg"  alt="Образ 7"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_8.svg"  alt="Образ 8"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_9.svg"  alt="Образ 9"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_10.svg" alt="Образ 10"></div>
+          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_11.svg" alt="Образ 11"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 6: WISHES -->
+    <section id="wishes" class="section">
+      <h2 class="t-hl mb-gt fi">Пожелания</h2>
+      <p class="t-body fi d1">Мы будем рады видеть ваших детей и питомцев — если планируете прийти с ними, пожалуйста, отметьте это в анкете. Обратите внимание, что на локации нет игровой зоны для маленьких гостей.</p>
+      <div class="sep fi d1"><img src="Разделитель.svg" alt=""></div>
+      <p class="t-body fi d2">Ваши подарки в конвертах станут лучшими для нас и помогут воплотить наши совместные планы и мечты.</p>
+      <div class="sep fi d2"><img src="Разделитель.svg" alt=""></div>
+      <p class="t-body fi d3">Просим не дарить цветы: после свадьбы мы уезжаем и не успеем насладиться их красотой.</p>
+      <div class="sep fi d3"><img src="Разделитель.svg" alt=""></div>
+      <p class="t-body fi d4">И последняя просьба: вместо «горько» — тёплые слова и аплодисменты. Это создаст ту самую атмосферу теплого и уютного вечера, о которой мы мечтаем.</p>
+      <div class="sep fi d4"><img src="Разделитель.svg" alt=""></div>
+    </section>
+
+    <!-- BLOCK 7: CONTACTS -->
+    <section id="contacts" class="section">
+      <h2 class="t-hl mb-gt fi">Контакты</h2>
+      <p class="t-body mb-gc fi d1">С созданием торжества нам помогает наш свадебный организатор Анна Логвинова.</p>
+      <p class="t-body fi d1">Если у вас возникнут вопросы, чувствуйте себя свободно, обращаясь к Анне или лично к нам.</p>
+      <p class="cont-name mt-gt fi d2">Анна Логвинова</p>
+      <a href="tel:+375292761451" class="cont-phone fi d2">+375 (29) 276-14-51</a>
+      <div class="cont-btns fi d3">
+        <a href="https://t.me/+375292761451" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Telegram →</a>
+        <a href="https://www.instagram.com/logvinova_wedding/" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Instagram →</a>
+      </div>
+      <div class="sep fi d3"><img src="Разделитель.svg" alt=""></div>
+      <div class="fi d4">
+        <p class="t-body mb-gc">Мы также создали телеграм-чат нашего праздника, где можно будет узнать новую информацию, а также поделиться фото и видео в день свадьбы и после.</p>
+        <a href="https://t.me/+0gbHtr8Ke9plZDhi" target="_blank" rel="noopener noreferrer" class="btn">Наш чат в Telegram →</a>
+      </div>
+    </section>
+
+    <!-- BLOCK 8: RSVP / ПОДТВЕРЖДЕНИЕ -->
+    <section id="rsvp" class="section">
+      <h2 class="rsvp-hl mb-gt fi">Подтверждение</h2>
+      <p class="t-body mb-gc fi d1">
+        Дорогой гость, просим сообщить о своём присутствии в анкете ниже или другим удобным способом до 1 августа.
+      </p>
+      <p class="t-body mb-gc fi d1">
+        Снизу прилагаем ссылку на небольшую анкету. Заполните её, пожалуйста, чтобы мы могли получить ответ и учесть ваши предпочтения в день праздника.
+      </p>
+      <a href="https://forms.gle/Sf1DouU4RU75xNEs7" target="_blank" rel="noopener noreferrer" class="btn fi d2">Заполнить анкету →</a>
+      <div class="photo mt-gt fi d2">
+        <img src="Наше_фото_в_конце.svg" alt="Денис и Александра">
+      </div>
+      <p class="rsvp-closing fi d3">С нетерпением ждём встречи с вами!</p>
+      <p class="rsvp-names fi d3">Ваши Денис и Александра</p>
+    </section>
+
+  </div><!-- /content-wrap -->
+  </div><!-- /site-content -->
+
+
+  <script>
+    /* ── HERO ANIMATION ── */
+    const overlay   = document.getElementById('hero-overlay');
+    const siteContent = document.getElementById('site-content');
+    let triggered   = false;
+
+    function openEnvelope() {
+      if (triggered) return;
+      triggered = true;
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      overlay.classList.add('opening');
+
+      // Show content, unlock scroll
+      setTimeout(() => {
+        siteContent.classList.add('visible');
+        document.body.classList.add('unlocked');
+      }, 1350);
+
+      setTimeout(() => overlay.classList.add('done'), 1450);
+      setTimeout(() => overlay.remove(), 2100);
+    }
+
+    overlay.addEventListener('click',      openEnvelope);
+    overlay.addEventListener('touchstart', openEnvelope, { passive: true });
+    overlay.addEventListener('wheel',      openEnvelope, { passive: true });
+    overlay.addEventListener('keydown',    openEnvelope);
+
+    let ty0 = 0;
+    overlay.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; }, { passive: true });
+    overlay.addEventListener('touchend',   e => {
+      if (Math.abs(ty0 - e.changedTouches[0].clientY) > 20) openEnvelope();
+    }, { passive: true });
+
+    /* ── FADE-IN ON SCROLL ── */
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      }),
+      { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+    );
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+    /* ── CAROUSEL MOUSE DRAG ── */
+    document.querySelectorAll('.carousel-track').forEach(track => {
+      let down = false, startX, startScroll;
+      track.addEventListener('mousedown', e => {
+        down = true; startX = e.pageX; startScroll = track.scrollLeft;
+        track.classList.add('dragging');
+      });
+      const end = () => { down = false; track.classList.remove('dragging'); };
+      track.addEventListener('mouseup',    end);
+      track.addEventListener('mouseleave', end);
+      track.addEventListener('mousemove',  e => {
+        if (!down) return;
+        e.preventDefault();
+        track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
+      });
+    });
+  </script>
+
+</body>
+</html>
