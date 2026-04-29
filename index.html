@@ -60,8 +60,8 @@
 
     body {
       font-family: var(--f-serif);
-      font-size: 18px;
-      line-height: 23px;
+      font-size: 20px;
+      line-height: 26px;
       color: var(--c-body);
       background: var(--c-bg);
       overflow-x: hidden;
@@ -113,7 +113,7 @@
     #env-container {
       position: absolute;
 
-      height: 100dvh;
+      height: calc(100dvh + 10px);
       width: 100vw;
 
       top: 50%;
@@ -192,7 +192,7 @@
     #hero-group-bottom {
       position: absolute;
       left: 50%;
-      top: calc(75vh + 20px);
+      top: calc(75vh + 30px);
       transform: translate(-50%, -50%);
       display: flex;
       flex-direction: column;
@@ -225,8 +225,8 @@
       left: 0;
       right: 0;
       font-family: var(--f-serif);
-      font-size: 18px;
-      line-height: 23px;
+      font-size: 20px;
+      line-height: 26px;
       color: var(--c-body);
       text-align: center;
       opacity: 0.6;
@@ -276,7 +276,7 @@
       color: var(--c-headline);
       text-align: center;
     }
-    .t-body  { font-family: var(--f-serif); font-size: 18px; line-height: 23px; color: var(--c-body); }
+    .t-body  { font-family: var(--f-serif); font-size: 20px; line-height: 26px; color: var(--c-body); }
     .t-names { font-family: var(--f-script); font-size: 32px; line-height: 52px; color: var(--c-headline); }
 
     /* ══════════════════════════════════════════
@@ -287,7 +287,7 @@
       width: 100%; min-height: 43px; padding: 4px 16px;
       border: 1px solid var(--c-btn); border-radius: var(--r-btn);
       background: var(--c-btn-bg);
-      font-family: var(--f-serif); font-size: 18px; line-height: 23px; color: var(--c-btn);
+      font-family: var(--f-serif); font-size: 20px; line-height: 26px; color: var(--c-btn);
       text-decoration: none; cursor: pointer;
       transition: background 0.2s ease; -webkit-tap-highlight-color: transparent;
     }
@@ -353,7 +353,7 @@
     }
     .calendar th,
     .calendar td {
-      font-size: 18px; line-height: 23px; font-weight: 400;
+      font-size: 20px; line-height: 26px; font-weight: 400;
       color: var(--c-body);
       text-align: center;
       width: calc(100% / 7);
@@ -381,7 +381,7 @@
     .prog-item { display: grid; grid-template-columns: 60px 1fr; gap: 0 14px; align-items: start; }
     .prog-time  { font-family: var(--f-serif); font-size: 24px; line-height: 32px; color: var(--c-body); }
     .prog-title { font-size: 24px; line-height: 32px; color: var(--c-body); }
-    .prog-desc  { font-size: 18px; line-height: 23px; color: var(--c-body); opacity: 0.75; margin-top: 2px; }
+    .prog-desc  { font-size: 20px; line-height: 26px; color: var(--c-body); opacity: 0.75; margin-top: 2px; }
 
     /* ══════════════════════════════════════════
        BLOCK 5 — DRESS CODE
@@ -395,10 +395,10 @@
       margin-left:  calc(-1 * var(--px));
       margin-right: calc(-1 * var(--px));
     }
-    .carousel-label { font-size: 18px; line-height: 23px; color: var(--c-body); margin-bottom: 10px; padding: 0 var(--px); }
+    .carousel-label { font-size: 20px; line-height: 26px; color: var(--c-body); margin-bottom: 10px; padding: 0 var(--px); }
     .carousel-track {
       display: flex;
-      gap: 5px;
+      gap: 0px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
@@ -411,8 +411,9 @@
     .carousel-track::-webkit-scrollbar { display: none; }
     .carousel-item {
       flex: 0 0 auto;
-      width: 118px;
-      height: 240px;
+      width: 170px;
+      height: 346px;
+      margin-right: -30px;
       border-radius: var(--r-photo);
       overflow: hidden;
       scroll-snap-align: start;
@@ -424,6 +425,40 @@
       object-position: bottom center;
       display: block;
     }
+    /* Carousel header with hint arrow */
+    .carousel-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 var(--px);
+      margin-bottom: 10px;
+    }
+
+    .carousel-label {
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    .carousel-hint {
+      font-size: 24px;
+      font-family: var(--f-serif);
+      color: var(--c-btn);
+      opacity: 0.6;
+      animation: hintMove 1.2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes hintMove {
+      0% { transform: translateX(0); opacity: 0.4; }
+      50% { transform: translateX(6px); opacity: 0.9; }
+      100% { transform: translateX(0); opacity: 0.4; }
+    }
+
+    @media (min-width: 768px) {
+      .carousel-hint {
+        font-size: 28px;
+      }
+}
 
     /* ══════════════════════════════════════════
        BLOCK 7 — CONTACTS
@@ -437,7 +472,7 @@
     ══════════════════════════════════════════ */
     #rsvp { text-align: left; }
     .rsvp-hl { font-family: var(--f-script); font-size: 52px; line-height: 1.05; color: var(--c-headline); text-align: center; }
-    .rsvp-closing { font-family: var(--f-serif); font-size: 18px; line-height: 23px; color: var(--c-body); text-align: center; margin-top: var(--gt); }
+    .rsvp-closing { font-family: var(--f-serif); font-size: 20px; line-height: 26px; color: var(--c-body); text-align: center; margin-top: var(--gt); }
     .rsvp-names   { font-family: var(--f-script); font-size: 36px; line-height: 1.2; color: var(--c-headline); text-align: center; margin-top: 20px; }
 
     /* ══════════════════════════════════════════
@@ -452,8 +487,8 @@
       #content-wrap .section { max-width: 680px; margin: 0 auto; }
 
       .t-hl          { font-size: 64px; }
-      .prog-item     { grid-template-columns: 70px 1fr; gap: 0 18px; }
-      .carousel-item { width: 144px; height: 292px; }
+      .prog-item     { grid-template-columns: 70px 1fr; gap: 0 20px; }
+      .carousel-item { width: 208px; height: 420px; }
       .rsvp-hl       { font-size: 64px; }
     }
 
@@ -487,7 +522,6 @@
 
     <div id="hero-group-bottom">
       <span class="h-names">Денис и Александра</span>
-      <span class="h-date">10 сентября 2026 · Минск</span>
     </div>
 
     <span class="h-hint">Нажмите, чтобы открыть</span>
@@ -506,7 +540,7 @@
 
     <!-- BLOCK 2: INVITATION + DATE -->
     <section id="invitation" class="section">
-      <h2 class="t-hl mb-gt fi">Дорогие гости!</h2>
+      <h2 class="t-hl mb-gt fi">Родные и близкие!</h2>
       <p class="t-body mb-gc fi d1">
         Мы вступаем в новый этап нашей жизни и хотим разделить это с людьми, которые значат для нас больше всего — и вы среди них.
       </p>
@@ -591,18 +625,18 @@
       <p class="dc-sub mt-gt mb-gc fi d2">Палитра</p>
       <p class="t-body mb-gc fi d2">Мы очень ждем и тщательно готовимся к нашему дню. И будем благодарны, если вы поддержите стилистику нашего торжества! Ориентируйтесь на палитру ниже — она сочетает темные благородные оттенки и нежные пастельные тона.</p>
       <div class="palette fi d3">
-        <div class="pal-c" style="background:#E6E4E4"></div>
-        <div class="pal-c" style="background:#E9D9C6"></div>
-        <div class="pal-c" style="background:#FDE3E3"></div>
-        <div class="pal-c" style="background:#EAF1C5"></div>
-        <div class="pal-c" style="background:#F6EBCA"></div>
-        <div class="pal-c" style="background:#F3C9B0"></div>
         <div class="pal-c" style="background:#0B0B0B"></div>
         <div class="pal-c" style="background:#70604E"></div>
         <div class="pal-c" style="background:#DAA5AE"></div>
         <div class="pal-c" style="background:#494E38"></div>
         <div class="pal-c" style="background:#E9CC73"></div>
         <div class="pal-c" style="background:#BA682D"></div>
+        <div class="pal-c" style="background:#E6E4E4"></div>
+        <div class="pal-c" style="background:#E9D9C6"></div>
+        <div class="pal-c" style="background:#FDE3E3"></div>
+        <div class="pal-c" style="background:#EAF1C5"></div>
+        <div class="pal-c" style="background:#F6EBCA"></div>
+        <div class="pal-c" style="background:#F3C9B0"></div>
       </div>
       <p class="t-body fi d3">Просим воздержаться от ярких кричащих оттенков и принтов, а также красного и синего цветов.</p>
 
@@ -610,7 +644,10 @@
       <p class="t-body mt-gc fi d2">Ниже мы собрали для вас примеры образов для лучшего понимания палитры. Вы можете ориентироваться на них и вдохновляться.</p>
 
       <div class="carousel-wrap mt-gc fi d3">
-        <p class="carousel-label">Примеры для женщин:</p>
+        <div class="carousel-header">
+          <p class="carousel-label">Примеры для женщин:</p>
+          <span class="carousel-hint">→</span>
+        </div>
         <div class="carousel-track" role="list">
           <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_01.svg" alt="Образ 1"></div>
           <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_02.svg" alt="Образ 2"></div>
@@ -626,8 +663,11 @@
         </div>
       </div>
 
-      <div class="carousel-wrap mt-gc fi d4">
-        <p class="carousel-label">Примеры для мужчин:</p>
+      <div class="carousel-wrap mt-gc fi d3">
+        <div class="carousel-header">
+          <p class="carousel-label">Примеры для мужчин:</p>
+          <span class="carousel-hint">→</span>
+        </div>
         <div class="carousel-track" role="list">
           <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_1.svg"  alt="Образ 1"></div>
           <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_2.svg"  alt="Образ 2"></div>
@@ -671,7 +711,7 @@
       <div class="sep fi d3"><img src="Разделитель.svg" alt=""></div>
       <div class="fi d4">
         <p class="t-body mb-gc">Мы также создали телеграм-чат нашего праздника, где можно будет узнать новую информацию, а также поделиться фото и видео в день свадьбы и после.</p>
-        <a href="https://t.me/+0gbHtr8Ke9plZDhi" target="_blank" rel="noopener noreferrer" class="btn">Наш чат в Telegram →</a>
+        <a href="https://t.me/+0gbHtr8Ke9plZDhi" target="_blank" rel="noopener noreferrer" class="btn">Присоединиться к чату →</a>
       </div>
     </section>
 
