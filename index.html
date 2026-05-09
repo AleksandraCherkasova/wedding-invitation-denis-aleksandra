@@ -4,23 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Денис и Александра · 10.09.2026</title>
-  <link rel="icon" type="image/svg+xml" href="Логотип.svg">
+  <link rel="icon" type="image/svg+xml" href="Logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   
-  <!-- Базовые мета-теги Open Graph -->
-
-  <!-- Заголовок, который увидят гости -->
   <meta property="og:title" content="Денис и Александра · Приглашение на свадьбу">
 
-  <!-- Краткое описание (до 300 символов) -->
   <meta property="og:description" content="10 сентября 2026 · Минск. Будем рады разделить с вами этот важный день!">
 
-  <!-- Ссылка на вашу подготовленную картинку -->
-  <meta property="og:image" content="https://aleksandracherkasova.github.io/wedding-invitation-denis-aleksandra/Наше_фото_в_начале.svg">
+  <meta property="og:image" content="https://aleksandracherkasova.github.io/wedding-invitation-denis-aleksandra/Our_photo_start.svg">
 
-  <!-- Тип контента -->
   <meta property="og:type" content="website">
 
   <meta property="og:image:width" content="1200">
@@ -65,7 +59,6 @@
       color: var(--c-body);
       background: var(--c-bg);
       overflow-x: hidden;
-      /* locked until hero animation completes */
       overflow-y: hidden;
     }
 
@@ -139,13 +132,13 @@
     #env-top {
       top: 0;
       z-index: 3;
-      object-position: top;    /* прибиваем содержимое к верху */
+      object-position: top;
     }
 
     #env-bottom {
       bottom: 0;
       z-index: 2;
-      object-position: bottom; /* прибиваем содержимое к низу */
+      object-position: bottom;
     }
 
     /* Text layer */
@@ -157,7 +150,6 @@
       transition: opacity 0.7s ease;
     }
 
-    /* Group 1 — "Вы приглашены / на свадьбу" at 25vh */
     #hero-group-top {
       position: absolute;
       left: 50%;
@@ -188,7 +180,6 @@
       white-space: nowrap;
     }
 
-    /* Group 2 — "Денис и Александра / дата" at 75vh + 20px */
     #hero-group-bottom {
       position: absolute;
       left: 50%;
@@ -218,7 +209,6 @@
       white-space: nowrap;
     }
 
-    /* Hint — 40px from bottom, centred */
     .h-hint {
       position: absolute;
       bottom: 40px;
@@ -334,7 +324,7 @@
     }
 
     /* ══════════════════════════════════════════
-       BLOCK 2 — INVITATION + DATE
+       BLOCK 1 — INVITATION + DATE
     ══════════════════════════════════════════ */
     .inv-date {
       font-family: var(--f-serif);
@@ -369,13 +359,13 @@
     }
 
     /* ══════════════════════════════════════════
-       BLOCK 3 — LOCATION
+       BLOCK 2 — LOCATION
     ══════════════════════════════════════════ */
     .loc-name { font-size: 24px; line-height: 32px; color: var(--c-body); }
     .loc-btns { display: flex; flex-direction: column; gap: var(--gc); }
 
     /* ══════════════════════════════════════════
-       BLOCK 4 — PROGRAM
+       BLOCK 3 — PROGRAM
     ══════════════════════════════════════════ */
     .prog-list { display: flex; flex-direction: column; gap: 30px; }
     .prog-item { display: grid; grid-template-columns: 60px 1fr; gap: 0 14px; align-items: start; }
@@ -419,12 +409,6 @@
       scroll-snap-align: start;
       background: transparent;
     }
-    .carousel-item img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      object-position: bottom center;
-      display: block;
-    }
     /* Carousel header with hint arrow */
     .carousel-header {
       display: flex;
@@ -458,17 +442,45 @@
       .carousel-hint {
         font-size: 28px;
       }
-}
+    }
+
+    .carousel-track.single-image-track {
+        padding: 0 var(--px) 0 var(--px);
+        gap: 0;
+        cursor: grab;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .carousel-track.single-image-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-panorama {
+      display: block;
+      height: 346px;
+      width: auto;
+      max-width: none;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .carousel-panorama {
+        height: 420px;
+      }
+    }
+
 
     /* ══════════════════════════════════════════
-       BLOCK 7 — CONTACTS
+       BLOCK 6 — CONTACTS
     ══════════════════════════════════════════ */
     .cont-name  { font-size: 24px; line-height: 32px; color: var(--c-body); }
     .cont-phone { font-size: 24px; line-height: 32px; color: var(--c-body); text-decoration: none; display: block; margin-bottom: var(--gc); }
     .cont-btns  { display: flex; flex-direction: column; gap: var(--gc); }
 
     /* ══════════════════════════════════════════
-       BLOCK 8 — RSVP / ПОДТВЕРЖДЕНИЕ
+       BLOCK 7 — RSVP
     ══════════════════════════════════════════ */
     #rsvp { text-align: left; }
     .rsvp-hl { font-family: var(--f-script); font-size: 52px; line-height: 1.05; color: var(--c-headline); text-align: center; }
@@ -488,7 +500,6 @@
 
       .t-hl          { font-size: 64px; }
       .prog-item     { grid-template-columns: 70px 1fr; gap: 0 20px; }
-      .carousel-item { width: 208px; height: 420px; }
       .rsvp-hl       { font-size: 64px; }
     }
 
@@ -529,23 +540,20 @@
 
 </section>
 
-  <!-- Content (placeholder — replace with real content) -->
-
-
   <!-- ══════════════════════════════════════════
        SITE CONTENT
   ══════════════════════════════════════════ -->
   <div id="site-content">
   <div id="content-wrap">
 
-    <!-- BLOCK 2: INVITATION + DATE -->
+    <!-- BLOCK 1: INVITATION + DATE -->
     <section id="invitation" class="section">
       <h2 class="t-hl mb-gt fi">Родные и близкие!</h2>
       <p class="t-body mb-gc fi d1">
         Мы вступаем в новый этап нашей жизни и хотим разделить это с людьми, которые значат для нас больше всего — и вы среди них.
       </p>
       <div class="photo mb-gc fi d2">
-        <img src="Наше_фото_в_начале.svg" alt="Денис и Александра">
+        <img src="Our_photo_start.svg" alt="Денис и Александра">
       </div>
       <p class="t-body mb-gc fi d2">
         Будем невероятно рады видеть вас на нашей свадьбе, которая состоится
@@ -571,7 +579,7 @@
       </div>
     </section>
 
-    <!-- BLOCK 3: LOCATION -->
+    <!-- BLOCK 2: LOCATION -->
     <section id="location" class="section">
       <h2 class="t-hl mb-gt fi">Место проведения</h2>
       <p class="loc-name mb-gc fi d1">La Dolce Vita House</p>
@@ -579,7 +587,7 @@
         Минская область, Узденский район,<br>д. Русаково, ул. Русаковская, д.14
       </p>
       <div class="photo mb-gc fi d2">
-        <img src="Фото_локации.svg" alt="La Dolce Vita House">
+        <img src="Location.svg" alt="La Dolce Vita House">
       </div>
       <p class="t-body mb-gc fi d2">
         Для вашего комфорта рекомендуем прокладывать маршрут через деревню Яченка.
@@ -590,7 +598,7 @@
       </div>
     </section>
 
-    <!-- BLOCK 4: PROGRAM -->
+    <!-- BLOCK 3: PROGRAM -->
     <section id="program" class="section">
       <h2 class="t-hl mb-gt fi">Программа дня</h2>
       <div class="prog-list">
@@ -617,7 +625,7 @@
       </div>
     </section>
 
-    <!-- BLOCK 5: DRESS CODE -->
+    <!-- BLOCK 4: DRESS CODE -->
     <section id="dresscode" class="section">
       <h2 class="t-hl mb-gt fi">Дресс код</h2>
       <p class="t-body fi d1">Нам важно, чтобы вы чувствовали себя комфортно и красиво. Выбирайте праздничный наряд, в котором вам будет легко и свободно.</p>
@@ -625,18 +633,18 @@
       <p class="dc-sub mt-gt mb-gc fi d2">Палитра</p>
       <p class="t-body mb-gc fi d2">Мы очень ждем и тщательно готовимся к нашему дню. И будем благодарны, если вы поддержите стилистику нашего торжества! Ориентируйтесь на палитру ниже — она имеет как темные благородные оттенки, так и нежные пастельные тона.</p>
       <div class="palette fi d3">
-        <div class="pal-c" style="background:#0B0B0B"></div>
-        <div class="pal-c" style="background:#70604E"></div>
-        <div class="pal-c" style="background:#DAA5AE"></div>
         <div class="pal-c" style="background:#494E38"></div>
         <div class="pal-c" style="background:#E9CC73"></div>
         <div class="pal-c" style="background:#BA682D"></div>
-        <div class="pal-c" style="background:#E6E4E4"></div>
-        <div class="pal-c" style="background:#E9D9C6"></div>
-        <div class="pal-c" style="background:#FDE3E3"></div>
+        <div class="pal-c" style="background:#DAA5AE"></div>
+        <div class="pal-c" style="background:#60443D"></div>
+        <div class="pal-c" style="background:#0B0B0B"></div>
         <div class="pal-c" style="background:#EAF1C5"></div>
         <div class="pal-c" style="background:#F6EBCA"></div>
         <div class="pal-c" style="background:#F3C9B0"></div>
+        <div class="pal-c" style="background:#FDE3E3"></div>
+        <div class="pal-c" style="background:#E9D9C6"></div>
+        <div class="pal-c" style="background:#E6E4E4"></div>
       </div>
       <p class="t-body fi d3">Просим воздержаться от ярких кричащих оттенков и принтов, а также красного и синего цветов.</p>
 
@@ -648,18 +656,8 @@
           <p class="carousel-label">Примеры для женщин:</p>
           <span class="carousel-hint">→</span>
         </div>
-        <div class="carousel-track" role="list">
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_01.svg" alt="Образ 1"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_02.svg" alt="Образ 2"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_03.svg" alt="Образ 3"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_04.svg" alt="Образ 4"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_05.svg" alt="Образ 5"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_06.svg" alt="Образ 6"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_07.svg" alt="Образ 7"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_08.svg" alt="Образ 8"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_09.svg" alt="Образ 9"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_10.svg" alt="Образ 10"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_женщин_11.svg" alt="Образ 11"></div>
+        <div class="carousel-track single-image-track" role="list">
+          <img src="women-styles.png" alt="Примеры образов для женщин" class="carousel-panorama">
         </div>
       </div>
 
@@ -668,36 +666,26 @@
           <p class="carousel-label">Примеры для мужчин:</p>
           <span class="carousel-hint">→</span>
         </div>
-        <div class="carousel-track" role="list">
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_1.svg"  alt="Образ 1"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_2.svg"  alt="Образ 2"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_3.svg"  alt="Образ 3"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_4.svg"  alt="Образ 4"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_5.svg"  alt="Образ 5"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_6.svg"  alt="Образ 6"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_7.svg"  alt="Образ 7"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_8.svg"  alt="Образ 8"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_9.svg"  alt="Образ 9"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_10.svg" alt="Образ 10"></div>
-          <div class="carousel-item" role="listitem"><img src="Образы_для_мужчин_11.svg" alt="Образ 11"></div>
+        <div class="carousel-track single-image-track" role="list">
+          <img src="men-styles.png" alt="Примеры образов для мужчин" class="carousel-panorama">
         </div>
       </div>
     </section>
 
-    <!-- BLOCK 6: WISHES -->
+    <!-- BLOCK 5: WISHES -->
     <section id="wishes" class="section">
       <h2 class="t-hl mb-gt fi">Пожелания</h2>
       <p class="t-body fi d1">Мы будем рады видеть ваших детей и питомцев — если планируете прийти с ними, пожалуйста, отметьте это в анкете. Обратите внимание, что на локации нет игровой зоны для маленьких гостей.</p>
-      <div class="sep fi d1"><img src="Разделитель.svg" alt=""></div>
-      <p class="t-body fi d2">Ваши подарки в конвертах станут лучшими для нас и помогут воплотить наши совместные планы и мечты.</p>
-      <div class="sep fi d2"><img src="Разделитель.svg" alt=""></div>
-      <p class="t-body fi d3">Просим не дарить цветы: после свадьбы мы уезжаем и не успеем насладиться их красотой.</p>
-      <div class="sep fi d3"><img src="Разделитель.svg" alt=""></div>
+      <div class="sep fi d1"><img src="separator.svg" alt=""></div>
+      <p class="t-body fi d2">Просим не дарить цветы: после свадьбы мы уезжаем и не успеем насладиться их красотой.</p>
+      <div class="sep fi d2"><img src="separator.svg" alt=""></div>
+      <p class="t-body fi d3">Ваши подарки в конвертах станут лучшими для нас и помогут воплотить наши совместные планы и мечты.</p>
+      <div class="sep fi d3"><img src="separator.svg" alt=""></div>
       <p class="t-body fi d4">И последняя просьба: вместо «горько» — тёплые слова и аплодисменты. Это создаст ту самую атмосферу теплого и уютного вечера, о которой мы мечтаем.</p>
-      <div class="sep fi d4"><img src="Разделитель.svg" alt=""></div>
+      <div class="sep fi d4"><img src="separator.svg" alt=""></div>
     </section>
 
-    <!-- BLOCK 7: CONTACTS -->
+    <!-- BLOCK 6: CONTACTS -->
     <section id="contacts" class="section">
       <h2 class="t-hl mb-gt fi">Контакты</h2>
       <p class="t-body mb-gc fi d1">С созданием торжества нам помогает наш свадебный организатор Анна Логвинова.</p>
@@ -708,14 +696,14 @@
         <a href="https://t.me/+375292761451" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Telegram →</a>
         <a href="https://www.instagram.com/logvinova_wedding/" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Instagram →</a>
       </div>
-      <div class="sep fi d3"><img src="Разделитель.svg" alt=""></div>
+      <div class="sep fi d3"><img src="separator.svg" alt=""></div>
       <div class="fi d4">
         <p class="t-body mb-gc">Мы также создали телеграм-чат нашего праздника, где можно будет узнать новую информацию, а также поделиться фото и видео в день свадьбы и после.</p>
         <a href="https://t.me/+0gbHtr8Ke9plZDhi" target="_blank" rel="noopener noreferrer" class="btn">Присоединиться к чату →</a>
       </div>
     </section>
 
-    <!-- BLOCK 8: RSVP / ПОДТВЕРЖДЕНИЕ -->
+    <!-- BLOCK 7: RSVP -->
     <section id="rsvp" class="section">
       <h2 class="rsvp-hl mb-gt fi">Подтверждение</h2>
       <p class="t-body mb-gc fi d1">
@@ -726,14 +714,14 @@
       </p>
       <a href="https://forms.gle/Sf1DouU4RU75xNEs7" target="_blank" rel="noopener noreferrer" class="btn fi d2">Заполнить анкету →</a>
       <div class="photo mt-gt fi d2">
-        <img src="Наше_фото_в_конце.svg" alt="Денис и Александра">
+        <img src="Our_photo_end.svg" alt="Денис и Александра">
       </div>
       <p class="rsvp-closing fi d3">С нетерпением ждём встречи с вами!</p>
-      <p class="rsvp-names fi d3">Ваши Денис и Александра</p>
+      <p class="rsvp-names fi d3">Денис и Александра</p>
     </section>
 
-  </div><!-- /content-wrap -->
-  </div><!-- /site-content -->
+  </div>
+  </div>
 
 
   <script>
