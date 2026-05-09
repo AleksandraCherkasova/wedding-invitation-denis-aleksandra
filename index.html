@@ -266,6 +266,10 @@
       line-height: 1;
       color: var(--c-headline);
       text-align: center;
+      margin-left: calc(-1 * var(--px) + 4px);
+      margin-right: calc(-1 * var(--px) + 4px);
+      padding-left: 0;
+      padding-right: 0;
     }
     .t-body  { font-family: var(--f-serif); font-size: 20px; line-height: 26px; color: var(--c-body); }
     .t-names { font-family: var(--f-script); font-size: 32px; line-height: 52px; color: var(--c-headline); }
@@ -274,6 +278,7 @@
        BUTTON
     ══════════════════════════════════════════ */
     .btn {
+      text-align: center;
       display: flex; align-items: center; justify-content: center;
       width: 100%; min-height: 43px; padding: 4px 16px;
       border: 1px solid var(--c-btn); border-radius: var(--r-btn);
@@ -284,6 +289,19 @@
     }
     .btn:hover  { background: #E5DFD2; }
     .btn:active { background: #DDD8CC; }
+    
+    /* Стрелка в кнопке по умолчанию видна */
+      .btn .btn-arrow {
+        display: inline-block;
+        margin-left: 4px;
+      }
+
+      /* При ширине экрана ≤ 342px стрелка исчезает */
+      @media (max-width: 342px) {
+        .btn .btn-arrow {
+          display: none;
+        }
+      }
 
     /* ══════════════════════════════════════════
        UTILITIES
@@ -591,11 +609,14 @@
         <img src="Location.svg" alt="La Dolce Vita House">
       </div>
       <p class="t-body mb-gc fi d2">
-        Для вашего комфорта рекомендуем прокладывать маршрут через деревню Яченка.
+        Для всех желающих будет организован трансфер из Минска на усадьбу и обратно.
+      </p>
+      <p class="t-body mb-gc fi d2">
+        Если вы планируете добираться самостоятельно, то для более удобного маршрута рекомендуем строить путь через деревню Яченка.
       </p>
       <div class="loc-btns fi d3">
-        <a href="https://maps.app.goo.gl/rBXBf5wreC9w9dHw7" target="_blank" rel="noopener noreferrer" class="btn">Открыть в Google картах →</a>
-        <a href="https://yandex.by/maps/-/CPr0ZL3Q" target="_blank" rel="noopener noreferrer" class="btn">Открыть в Яндекс картах →</a>
+        <a href="https://maps.app.goo.gl/rBXBf5wreC9w9dHw7" target="_blank" rel="noopener noreferrer" class="btn">Открыть в Google картах <span class="btn-arrow">→</span></a>
+        <a href="https://yandex.by/maps/-/CPr0ZL3Q" target="_blank" rel="noopener noreferrer" class="btn">Открыть в Яндекс картах <span class="btn-arrow">→</span></a>
       </div>
     </section>
 
@@ -694,13 +715,13 @@
       <p class="cont-name mt-gt fi d2">Анна Логвинова</p>
       <a href="tel:+375292761451" class="cont-phone fi d2">+375 (29) 276-14-51</a>
       <div class="cont-btns fi d3">
-        <a href="https://t.me/+375292761451" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Telegram →</a>
-        <a href="https://www.instagram.com/logvinova_wedding/" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Instagram →</a>
+        <a href="https://t.me/+375292761451" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Telegram <span class="btn-arrow">→</span></a>
+        <a href="https://www.instagram.com/logvinova_wedding/" target="_blank" rel="noopener noreferrer" class="btn">Связаться в Instagram <span class="btn-arrow">→</span></a>
       </div>
       <div class="sep fi d3"><img src="separator.svg" alt=""></div>
       <div class="fi d4">
         <p class="t-body mb-gc">Мы также создали телеграм-чат нашего праздника, где можно будет узнать новую информацию, а также поделиться фото и видео в день свадьбы и после.</p>
-        <a href="https://t.me/+0gbHtr8Ke9plZDhi" target="_blank" rel="noopener noreferrer" class="btn">Присоединиться к чату →</a>
+        <a href="https://t.me/+0gbHtr8Ke9plZDhi" target="_blank" rel="noopener noreferrer" class="btn">Присоединиться к чату <span class="btn-arrow">→</span></a>
       </div>
     </section>
 
@@ -713,7 +734,7 @@
       <p class="t-body mb-gc fi d1">
         Снизу прилагаем ссылку на небольшую анкету. Заполните её, пожалуйста, чтобы мы могли получить ответ и учесть ваши предпочтения в день праздника.
       </p>
-      <a href="https://forms.gle/Sf1DouU4RU75xNEs7" target="_blank" rel="noopener noreferrer" class="btn fi d2">Заполнить анкету →</a>
+      <a href="https://forms.gle/Sf1DouU4RU75xNEs7" target="_blank" rel="noopener noreferrer" class="btn fi d2">Заполнить анкету <span class="btn-arrow">→</span></a>
       <div class="photo mt-gt fi d2">
         <img src="Our_photo_end.svg" alt="Денис и Александра">
       </div>
